@@ -1,29 +1,81 @@
 function calculateBreakEven() {
-    // Get values from form
+    // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
     const hoursOpen = document.getElementById('hoursOpen').value;
     const daysOpen = document.getElementById('daysOpen').value;
     const hourlyWage = document.getElementById('hourlyWage').value;
-    const initialCosts = document.getElementById('initialCosts').value;
-    const fixedCosts = document.getElementById('fixedCosts').value;
-    const variableCosts = document.getElementById('variableCosts').value;
-    const pricePerUnit = document.getElementById('pricePerUnit').value;
-    const averageSales = document.getElementById('averageSales').value;
+    const initialCosts = parseFloat(document.getElementById('initialCosts').value);
+    const fixedCosts = parseFloat(document.getElementById('fixedCosts').value);
+    const pricePerUnit = parseFloat(document.getElementById('pricePerUnit').value);
+    const averageSales = parseFloat(document.getElementById('averageSales').value);
+    const marketingBudget = parseFloat(document.getElementById('marketingBudget').value); // New input for marketing budget
 
     // Calculate total labor cost per month
     const monthlyLaborCost = numEmployees * hoursOpen * daysOpen * 4 * hourlyWage;
 
-    // Calculate total monthly costs
-    const totalMonthlyCosts = parseFloat(initialCosts) + parseFloat(fixedCosts) + (variableCosts * averageSales * daysOpen * 4);
+    // Assuming COGS is 40% of sales, and profit per unit is therefore 60% of price
+    const profitPerUnit = pricePerUnit * 0.6;
 
-    // Calculate break-even units
-    const breakEvenUnits = (parseFloat(initialCosts) + parseFloat(fixedCosts)) / (pricePerUnit - variableCosts);
+    // Calculate the increase in sales due to marketing
+    const salesIncreaseFromMarketing = 0 + (4 * marketingBudget / 100);
 
-    // Estimate the timeline to break-even
-    const dailyUnitsSold = averageSales;
-    const daysToBreakEven = breakEvenUnits / dailyUnitsSold;
-    const monthsToBreakEven = daysToBreakEven / (daysOpen * 4);
+    // Adjusted average sales including the impact of marketing
+    const adjustedAverageSales = averageSales + salesIncreaseFromMarketing;
 
-    // Display the result
-    document.getElementById('result').innerHTML = `Estimated Time to Break Even: ${monthsToBreakEven.toFixed(2)} months`;
+    // Calculate total profit per month with adjusted sales
+    const monthlyProfit = (adjustedAverageSales * daysOpen * 4 * profitPerUnit) - (monthlyLaborCost + fixedCosts + marketingBudget); // Including marketing budget as monthly cost
+
+    // Adjust the logic to track until finances reach zero
+    let cumulativeProfit = -initialCosts; // Start with initial investment as negative profit
+    let months = [];
+    let finances = [];
+    for (let month = 1; month <= 48; month++) {
+        if (cumulativeProfit >= 0) break; // Stop adding months once break-even is reached
+        cumulativeProfit += monthlyProfit;
+        months.push(month);
+        finances.push(cumulativeProfit);
+    }
+
+    updateChartWithData(months, finances);
 }
+
+function updateChartWithData(months, finances) {
+    const ctx = document.getElementById('breakEvenChart').getContext('2d');
+    if (window.breakEvenChart instanceof Chart) {
+        window.breakEvenChart.destroy(); // Destroy the existing chart before creating a new one
+    }
+    window.breakEvenChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: months.map(month => `${month} months`),
+            datasets: [{
+                label: 'Cumulative Finances Over Time',
+                data: finances,
+                backgroundColor: 'rgba(186, 143, 98, 0.2)',
+                borderColor: 'rgba(186, 143, 98, 1)',
+                borderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false, // Changed to false to better represent negative values
+                    title: {
+                        display: true,
+                        text: 'Cumulative Finances ($)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time (Months)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Call the function to calculate break-even and update the chart
+calculateBreakEven();
