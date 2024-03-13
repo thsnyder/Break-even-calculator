@@ -77,5 +77,18 @@ function updateChartWithData(months, finances) {
     });
 }
 
+document.getElementById('downloadChart').addEventListener('click', function() {
+    // Assuming window.breakEvenChart is your Chart.js chart instance
+    if (window.breakEvenChart) {
+        const url = window.breakEvenChart.toBase64Image();
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'coffee-shop-break-even-chart.png'; // The filename for the download
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+});
+
 // Call the function to calculate break-even and update the chart
 calculateBreakEven();
