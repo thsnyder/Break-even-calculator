@@ -1,5 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-
 function calculateBreakEven() {
     // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
@@ -79,19 +77,25 @@ function updateChartWithData(months, finances) {
     });
 }
 
-document.getElementById('downloadChart').addEventListener('click', function() {
-    // Assuming window.breakEvenChart is your Chart.js chart instance
-    if (window.breakEvenChart) {
-        const url = window.breakEvenChart.toBase64Image();
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'coffee-shop-break-even-chart.png'; // The filename for the download
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadButton = document.getElementById('downloadChart');
+    if (downloadButton) {
+        downloadButton.addEventListener('click', function() {
+            if (window.breakEvenChart) {
+                const url = window.breakEvenChart.toBase64Image();
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'coffee-shop-break-even-chart.png'; // The filename for the download
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
+    } else {
+        console.error('Download button not found');
     }
 });
 
+
 // Call the function to calculate break-even and update the chart
 calculateBreakEven();
-});
