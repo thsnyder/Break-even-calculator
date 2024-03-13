@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', function() {
+
 function calculateBreakEven() {
     // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
@@ -92,3 +94,4 @@ document.getElementById('downloadChart').addEventListener('click', function() {
 
 // Call the function to calculate break-even and update the chart
 calculateBreakEven();
+});
