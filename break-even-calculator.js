@@ -1,6 +1,6 @@
-function updateMarginValue(value) {
-    document.getElementById('grossMarginValue').textContent = value;
-}
+// function updateMarginValue(value) {
+//     document.getElementById('grossMarginValue').textContent = value;
+// }
 
 function calculateBreakEven() {
     // User Inputs
@@ -13,6 +13,7 @@ function calculateBreakEven() {
     const pricePerUnit = parseFloat(document.getElementById('pricePerUnit').value);
     const averageSales = parseFloat(document.getElementById('averageSales').value);
     const marketingBudget = parseFloat(document.getElementById('marketingBudget').value); // New input for marketing budget
+    const grossMarginValue = parseFloat(document.getElementById('grossMarginValue').value);
 
     // Calculate total labor cost per month
     const monthlyLaborCost = numEmployees * hoursOpen * daysOpen * 4 * hourlyWage;
