@@ -1,13 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Update margin display and recalculate on slider change
-    document.getElementById('grossMargin').addEventListener('input', function() {
-        updateMarginValue(this.value);
-        calculateBreakEven();
-    });
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Update margin display and recalculate on slider change
+//     document.getElementById('grossMargin').addEventListener('input', function() {
+//         updateMarginValue(this.value);
+//         calculateBreakEven();
+//     });
 
-    // Initial calculation
-    calculateBreakEven();
-});
+//     // Initial calculation
+//     calculateBreakEven();
+// });
+
+
+function updateMarginValue(value) {
+    document.getElementById('grossMarginValue').textContent = value;
+}
 
 
 function calculateBreakEven() {
