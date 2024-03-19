@@ -1,3 +1,7 @@
+function updateMarginValue(value) {
+    document.getElementById('grossMarginValue').textContent = value;
+}
+
 function calculateBreakEven() {
     // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
@@ -13,8 +17,8 @@ function calculateBreakEven() {
     // Calculate total labor cost per month
     const monthlyLaborCost = numEmployees * hoursOpen * daysOpen * 4 * hourlyWage;
 
-    // Assuming COGS is 40% of sales, and profit per unit is therefore 60% of price
-    const profitPerUnit = pricePerUnit * 0.6;
+    // Net margins are calculated at the unit level
+    const profitPerUnit = pricePerUnit * grossMarginValue;
 
     // Calculate the increase in sales due to marketing
     const salesIncreaseFromMarketing = 0 + (4 * marketingBudget / 100);
