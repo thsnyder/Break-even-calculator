@@ -1,3 +1,7 @@
+function updateMarginValue(value) {
+    document.getElementById('grossMarginValue').textContent = value;
+}
+
 function calculateBreakEven() {
     // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
