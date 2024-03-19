@@ -10,11 +10,6 @@
 // });
 
 
-function updateMarginValue(value) {
-    document.getElementById('grossMarginValue').textContent = value;
-}
-
-
 function calculateBreakEven() {
     // User Inputs
     const numEmployees = document.getElementById('numEmployees').value;
@@ -25,14 +20,14 @@ function calculateBreakEven() {
     const fixedCosts = parseFloat(document.getElementById('fixedCosts').value);
     const pricePerUnit = parseFloat(document.getElementById('pricePerUnit').value);
     const averageSales = parseFloat(document.getElementById('averageSales').value);
-    const marketingBudget = parseFloat(document.getElementById('marketingBudget').value); // New input for marketing budget
-    const grossMarginValue = parseFloat(document.getElementById('grossMargin').value);
+    const marketingBudget = parseFloat(document.getElementById('marketingBudget').value); 
+    // const grossMarginValue = parseFloat(document.getElementById('grossMargin').value);
 
     // Calculate total labor cost per month
     const monthlyLaborCost = numEmployees * hoursOpen * daysOpen * 4 * hourlyWage;
 
     // Net margins are calculated at the unit level
-    const profitPerUnit = pricePerUnit * (grossMarginValue / 100);
+    const profitPerUnit = pricePerUnit * .75;
 
     // Calculate the increase in sales due to marketing
     const salesIncreaseFromMarketing = 0 + (4 * marketingBudget / 100);
